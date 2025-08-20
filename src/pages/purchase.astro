@@ -1,0 +1,245 @@
+---
+export const prerender = false;
+import products from "../data/product.json";
+import MainFrame from "../component/mainFrame.astro";
+import SvgAsset from "../component/util/svgAsset.astro";
+import TitleSection from "../component/util/titleSection.astro";
+
+import midtransClient from "midtrans-client";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+let error = false;
+let productData: { id?: any | undefined; productName?: string | undefined; category?: string | undefined; duration?: string | undefined; price?: number | undefined }; // Biar TypeScripnya tidak error makanya initialisasi type data didalamnya secara manual.
+let mode: string | undefined;
+let midtransSnapToken: string;
+
+if (Astro.request.method == "POST") {
+  try {
+    const formData = await Astro.request.formData();
+    if (formData.get("prompt")?.toString() == "checkout") {
+      mode = "payment";
+
+      // Data Check
+      if (!formData.get("idProduct") || !formData.get("emailUser") || !formData.get("paymentMethod")) error = true;
+      const idProduct = formData.get("idProduct")?.toString().split(",").map(Number);
+      const sourceData = products.find((p) => p.name == formData.get("category"));
+      if (idProduct && sourceData) {
+        const subItemData = sourceData?.subItem[idProduct[0]];
+
+        if (subItemData) {
+          const durationData = subItemData?.durations[idProduct[1] - 1];
+          if (durationData) {
+            error = false;
+            productData = {
+              category: formData.get("category")?.toString(),
+              productName: subItemData?.name,
+              duration: durationData.duration,
+              price: durationData.price,
+            };
+
+            // ==== MIDTRANS ====
+            const snap = await new midtransClient.Snap({
+              isProduction: false,
+              serverKey: import.meta.env.serverKey,
+            });
+            // ==== MIDTRANS PARAMETER ====
+            const time = new Date().toLocaleString("id-ID", { timeZone: "Asia/Jakarta", dateStyle: "short" });
+            const costumer_id = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1;
+            const parameter = {
+              transaction_details: {
+                order_id: `${formData.get("category")?.toString().toUpperCase()}${costumer_id}${formData.get("idProduct")?.toString().replace(",", "")}${time.replaceAll("/", "")}`,
+                description: `Penyewaan Akun ${productData.category?.toUpperCase()} ${productData.productName} dengan durasi ${productData.duration}`,
+                gross_amount: productData.price,
+              },
+              credit_card: {
+                secure: true,
+              },
+              customer_details: {
+                first_name: formData.get("userName")?.toString(),
+                email: formData.get("emailUser")?.toString(),
+              },
+              item_details: [
+                {
+                  id: `${productData.category}_${idProduct.join("")}`,
+                  price: productData.price,
+                  name: `${productData.productName}`,
+                  category: productData.category?.toUpperCase(),
+                  url: `/product/${productData.category}`,
+                  quantity: 1,
+                },
+              ],
+            };
+            // console.log(parameter);
+            await snap.createTransaction(parameter).then((transaction: { token: any }) => {
+              midtransSnapToken = transaction.token;
+
+              const expireDate = new Date();
+              expireDate.setMinutes(new Date().getMinutes() + 14);
+
+              Astro.cookies.set("tokenMidtrans", `${midtransSnapToken}`, {
+                path: "/",
+                httpOnly: true,
+                expires: expireDate,
+              });
+            });
+          } else {
+            error = true;
+            console.log("=== Data Not Found ===");
+          }
+        }
+      }
+
+      return Astro.redirect("/payment");
+      // Payment
+    } else if (formData.get("prompt")?.toString() == "purchase") {
+      mode = "checkout";
+
+      // Checkout
+      const idProduct = formData.get("idProduct")?.toString().split("");
+      productData = {
+        id: idProduct?.map((str) => parseInt(str, 10)),
+        productName: formData.get("productName")?.toString(),
+        category: formData.get("category")?.toString().toLowerCase(),
+        duration: formData.get("duration")?.toString(),
+        price: parseInt(formData.get("price")?.toString()),
+      };
+
+      // Set Error is true if data is undefined
+      !productData.id ? (error = true) : "";
+      !productData.productName ? (error = true) : "";
+      !productData.category ? (error = true) : "";
+      !productData.duration ? (error = true) : "";
+      !productData.price ? (error = true) : "";
+
+      // Validating Data
+      const sourceData = products.find((p) => p.name == productData.category);
+      const subItemData = sourceData?.subItem[productData.id[0]];
+      if (subItemData?.name == productData.productName) {
+        const durationData = subItemData?.durations[productData.id[1] - 1];
+        if (durationData?.duration == productData.duration && durationData?.price.toString() == productData.price) {
+          error = false;
+        } else {
+          error = true;
+        }
+      }
+    } else {
+      error = true;
+    }
+  } catch (errorLog) {
+    console.error(errorLog);
+    error = true;
+  }
+} else {
+  return Astro.redirect("/");
+}
+
+// Development
+// error = true;
+// console.log(midtransSnapToken)
+---
+
+{
+  error && (
+    <MainFrame endpoint="Terjadi Kesalahan">
+      <section id="home" class="pt-30" style="height: 61.2dvh;">
+        <div class="container h-full">
+          <div class="w-full h-full flex justify-center items-center">
+            <h2 class="text-2xl lg:text-4xl font-bold text-secondary opacity-50 text-center">Terjadi Sebuah Kesalahan</h2>
+          </div>
+        </div>
+      </section>
+    </MainFrame>
+  )
+}
+
+{
+  mode == "checkout" && !error && (
+    <MainFrame endpoint="Purchase">
+      <section id="home" class="flex pt-18 justify-center bg-bg-4">
+        <div class="container">
+          <form action="" method="post" class="flex flex-col">
+            <input type="text" name="prompt" id="prompt" class="hidden" value="checkout" />
+            <div class="w-full pt-12 ps-12 lg:ps-0">
+              <TitleSection title="Checkout Pembelian" />
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 items-center px-12 lg:gap-4 w-full">
+              <div class="px-4 pb-8 mb-8 lg:mb-0 flex flex-col justify-center items-center bg-bg pt-6 rounded-2xl col-span-2">
+                <table class="table-fixed text-base font-normal text-black opacity-80 w-[345px] lg:w-2xl lg:mx-12">
+                  <tbody>
+                    <tr>
+                      <td class="w-[36%] lg:w-[20%] px-2 py-4 font-semibold">
+                        <label for="emailUser">Alamat Email</label>
+                      </td>
+                      <td class="w-[2%]">:</td>
+                      <td class="px-2 lg:w-[78%]">
+                        <input type="email" name="emailUser" id="emailUser" placeholder="abc123@contoh.com" class="w-full rounded-xl p-2 bg-bg" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-4 font-semibold">
+                        <label for="userName">Nama</label>
+                      </td>
+                      <td class="">:</td>
+                      <td class="px-2">
+                        <input type="text" name="userName" id="userName" class="w-full rounded-xl p-2 bg-bg" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-4 font-semibold">
+                        <label for="paymentMethod">Metode Pembayaran</label>
+                      </td>
+                      <td class="">:</td>
+                      <td class="px-2">
+                        <ul class="flex flex-wrap gap-2">
+                          <li class="py-2">
+                            <input type="radio" name="paymentMethod" id="qris" value="qris" class="hidden peer" required />
+                            <label for="qris" class="flex bg-bg rounded-xl cursor-pointer hover:bg-gray-200 peer-checked:border-2 peer-checked:border-primary transition ease-in-out duration-150">
+                              <img src="/assets/QRIS_logo.svg.png" alt="QRIS" id="qris" class="w-24 h-10 p-2 rounded-xl bg-inherit" />
+                            </label>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3">
+                        <div class="flex items-center ps-2 pt-2 w-full">
+                          <input id="terms" type="checkbox" value="" class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded-sm focus:ring-primary focus:ring-2" required />
+                          <label for="terms" class="ms-4 text-sm font-medium text-secondary">
+                            Saya menyetujui{" "}
+                            <a href="#" class="text-primary hover:underline" id="termsAgree">
+                              ketentuan dan kebijakan
+                            </a>{" "}
+                            yang berlaku.
+                          </label>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="flex flex-col items-center justify-around bg-bg my-4 rounded-2xl h-full w-full col-span-2 lg:col-span-1">
+                <input type="text" name="category" id="category" hidden value={productData.category} />
+                <SvgAsset name={productData.category} />
+                <input type="text" name="idProduct" id="idProduct" hidden value={productData.id} />
+                <div class="flex items-center px-4 pb-8 w-full">
+                  <div class="block w-2/3">
+                    <h4 class="text-lg font-semibold text-secondary text-wrap">{productData.productName}</h4>
+                    <p class="text-lg font-normal text-secondary opacity-80">{productData.duration}</p>
+                  </div>
+                  <p class="text-lg font-bold w-1/3 text-primary text-end me-4">Rp. {parseInt(productData.price).toLocaleString()},-</p>
+                </div>
+                <div class="w-full px-4 pb-4">
+                  <button type="submit" class="bg-primary text-lg font-semibold text-bg w-full py-2.5 rounded-xl hover:opacity-80">
+                    Konfirmasi
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <script src="../js//payment.js" />
+        </div>
+      </section>
+    </MainFrame>
+  )
+}

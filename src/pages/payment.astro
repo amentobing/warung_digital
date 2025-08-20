@@ -1,0 +1,57 @@
+---
+import products from "../data/product.json";
+import MainFrame from "../component/mainFrame.astro";
+
+import * as dotenv from "dotenv";
+dotenv.config();
+
+const flash = Astro.locals;
+
+if(!flash.midtrans){
+  return Astro.redirect('/')
+}
+
+---
+{flash.midtrans &&
+
+<MainFrame endpoint="Payment">
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key={import.meta.env.clientKey}></script>
+  <section id="home" class="pt-30">
+    <div class="flex flex-col justify-center items-center mx-12 md:mx-50 py-4 mb-24 rounded-xl shadow bg-bg-2">
+      <div class="pb-12 text-center w-96">
+        <p class="text-secondary font-semibold leading-relaxed pb-4">Berikut hanyalah simulasi, tidak diperkenankan menggunakan mata uang sungguhan.</p>
+        <a href="https://simulator.sandbox.midtrans.com/v2/qris/index" target="_blank" class="bg-primary hover:opacity-80 px-4 py-2 rounded-xl text-bg">Simulasi Pembayaran</a>
+      </div>
+      <div id="paymentDisplay" class=" rounded justify-center shadow-xl mb-4"></div>
+    </div>
+
+    <script define:vars={{ token: flash.midtrans }} is:inline>
+      
+      function setCookie(status){
+        return `status=${status}; path=/status; SameSite=Lax`
+      }
+      window.snap.embed(`${token}`, {
+        embedId: "paymentDisplay",
+        onSuccess: (result)=>{
+            document.cookie = setCookie("success")
+            window.location.href = "/status"
+          },
+          onError: function (result) {
+            document.cookie = setCookie("error")
+            window.location.href = "/status"
+          },
+          onClose: function () {
+            document.cookie = setCookie("close")
+            window.location.href = "/"
+          },
+          onPending: function (result) {
+            alert("Jangan Lupa ya buat bayar!")
+            document.cookie = setCookie("pending")
+            window.location.href = "/"
+          }
+      });
+    </script>
+  </section>
+</MainFrame>
+}
+

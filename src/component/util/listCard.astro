@@ -1,0 +1,11 @@
+---
+const { title = "", showTitle = false } = Astro.props;
+import SvgAsset from "./svgAsset.astro";
+---
+
+<a href={`/product/${title}`} class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:bg-bg-2 transition duration-300 ease-in-out text-center justify-center align-middle flex">
+  <div class="flex flex-col justify-center align-middle">
+    <SvgAsset name={title} />
+    <h4 class="font-bold text-xs uppercase text-secondary mt-2 underline">{title}</h4>
+  </div>
+</a>

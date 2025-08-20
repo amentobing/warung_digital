@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+
+@theme {
+  --color-primary: #661e7b;
+  --color-secondary: #37312b;
+  --color-bg: #fffaf4;
+  --color-bg-2: #e2dbd3;
+  --color-bg-3: #ede3d8;
+  --color-bg-4: #e0d2e5;
+}
+
+body {
+  font-family: "Sofadi One", "Roboto", system-ui;
+  @apply bg-bg;
+}
+
+a {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a#termsAgree {
+  font-family: "Sofadi One";
+}
+
+#icon {
+  font-family: "Sofadi One", "Roboto", system-ui;
+}
+
+.lines {
+  @apply my-2 block h-0.5 w-[30px] bg-secondary;
+}
+
+.menus-active > span:nth-child(1) {
+  @apply rotate-45;
+}
+.menus-active > span:nth-child(2) {
+  @apply scale-0;
+}
+.menus-active > span:nth-child(3) {
+  @apply -rotate-45;
+}

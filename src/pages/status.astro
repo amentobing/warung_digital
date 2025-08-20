@@ -1,0 +1,17 @@
+---
+import MainFrame from "../component/mainFrame.astro";
+
+const flash = Astro.locals;
+
+if (!flash.statusPayment) return Astro.redirect("/");
+---
+
+{
+  flash.statusPayment && (
+    <MainFrame endpoint="Status">
+      <script define:vars={{ status: flash.statusPayment }} is:inline>
+        alert(`Akun kamu ${status == "success" ? "sudah" : "belum"} aktif, silahkan cek email kamu!`); window.location.href = "/"
+      </script>
+    </MainFrame>
+  )
+}

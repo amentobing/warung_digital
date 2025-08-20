@@ -1,0 +1,491 @@
+[
+  {
+    "name": "netflix",
+    "description": "Kami menyewakan akun Netflix dengan harga terjangkau.",
+    "subItem": [
+      {
+        "name": "1 profil 1 user",
+        "durations": [
+          {
+            "duration": "1 Hari",
+            "price": 12000
+          },
+          {
+            "duration": "3 Hari",
+            "price": 17000
+          },
+          {
+            "duration": "7 Hari",
+            "price": 20000
+          },
+          {
+            "duration": "1 Bulan",
+            "price": 40000
+          }
+        ]
+      },
+      {
+        "name": "1 profil 2 user",
+        "durations": [
+          {
+            "duration": "7 Hari",
+            "price": 18000
+          },
+          {
+            "duration": "1 Bulan",
+            "price": 28000
+          }
+        ]
+      },
+      {
+        "name": "Semi private",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 46000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vision",
+    "description": "Nikmati beragam tayangan premium dengan Vision.",
+    "subItem": [
+      {
+        "name": "Vision",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 30000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "canva",
+    "description": "Akses fitur premium Canva untuk desain tanpa batas.",
+    "subItem": [
+      {
+        "name": "Canva",
+        "durations": [
+          {
+            "duration": "1 Hari",
+            "price": 6000
+          },
+          {
+            "duration": "3 Hari",
+            "price": 7500
+          },
+          {
+            "duration": "7 Hari",
+            "price": 11000
+          },
+          {
+            "duration": "1 Bulan",
+            "price": 13000
+          }
+        ]
+      },
+      {
+        "name": "Canva Designer",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 15500
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "capcut",
+    "description": "Edit video profesional dengan CapCut Pro.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 25000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "loklok",
+    "description": "Streaming film dan serial terbaru dengan akun Loklok.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 18000
+          },
+          {
+            "duration": "3 Bulan",
+            "price": 30000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "wetv",
+    "description": "Tonton drama Asia eksklusif dengan WeTV VIP.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 20000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "lightroom",
+    "description": "Akses fitur premium Lightroom untuk edit foto lebih canggih.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Tahun",
+            "price": 25000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "brainly",
+    "description": "Dapatkan jawaban lengkap untuk tugas sekolah Anda dengan Brainly.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Tahun",
+            "price": 18000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "chatgpt",
+    "description": "Nikmati layanan ChatGPT untuk berbagai kebutuhan.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 40000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "spotify",
+    "description": "Dengarkan musik tanpa iklan dengan Spotify Premium.",
+    "subItem": [
+      {
+        "name": "Family plan Region Indonesia (19d/b)",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 28000
+          }
+        ]
+      },
+      {
+        "name": "Family plan Region Indonesia (25-28d/b)",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 30000
+          }
+        ]
+      },
+      {
+        "name": "Individual plan Region Indonesia",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 35000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "youtube",
+    "description": "Tonton video bebas iklan dengan YouTube Premium.",
+    "subItem": [
+      {
+        "name": "Family plan",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 17000
+          },
+          {
+            "duration": "2 Bulan",
+            "price": 25000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "hbo-max",
+    "description": "Nikmati film dan serial eksklusif HBO Max.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "3 Hari",
+            "price": 18000
+          },
+          {
+            "duration": "7 Hari",
+            "price": 25000
+          },
+          {
+            "duration": "1 Bulan",
+            "price": 40000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "meitu",
+    "description": "Edit foto dan video dengan fitur premium Meitu.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 23000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "shortmax",
+    "description": "Akses konten premium Shortmax.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 minggu",
+            "price": 31000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "wattpad",
+    "description": "Baca cerita favorit tanpa iklan dengan Wattpad Premium.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Tahun",
+            "price": 30000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "iqiyi",
+    "description": "Tonton drama dan film Asia tanpa batas dengan iQIYI VIP.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 17000
+          },
+          {
+            "duration": "3 Bulan",
+            "price": 22000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vidio",
+    "description": "Streaming liga olahraga dan tayangan premium Vidio.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 31000
+          }
+        ]
+      },
+      {
+        "name": "Private",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 44000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "disney+",
+    "description": "Nonton film dan serial Disney, Marvel, Star Wars, dll.",
+    "subItem": [
+      {
+        "name": "Bulanan",
+        "durations": [
+          {
+            "duration": "1 Bulan 6 user",
+            "price": 34000
+          },
+          {
+            "duration": "1 Bulan 3 user",
+            "price": 36000
+          }
+        ]
+      },
+      {
+        "name": "Private",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 83000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "alight-motion",
+    "description": "Gunakan fitur premium Alight Motion untuk edit video profesional.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Tahun",
+            "price": 23000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "viu",
+    "description": "Streaming drama Korea dan film Asia dengan Viu Premium.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 13000
+          },
+          {
+            "duration": "3 Bulan",
+            "price": 15000
+          },
+          {
+            "duration": "6 Bulan",
+            "price": 18000
+          },
+          {
+            "duration": "1 Bulan (TV)",
+            "price": 17000
+          }
+        ]
+      },
+      {
+        "name": "VIU+",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 28000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "drakor-id",
+    "description": "Akses drama Korea dengan mudah dan cepat.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 19000
+          },
+          {
+            "duration": "3 Bulan",
+            "price": 26000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bstation",
+    "description": "Nonton anime dan konten hiburan menarik lainnya.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 14000
+          },
+          {
+            "duration": "3 Bulan",
+            "price": 20000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dramabox",
+    "description": "Tonton beragam drama dan konten menarik dengan Dramabox.",
+    "subItem": [
+      {
+        "name": "Sharing",
+        "durations": [
+          {
+            "duration": "1 Bulan",
+            "price": 25000
+          }
+        ]
+      }
+    ]
+  }
+]

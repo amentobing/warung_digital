@@ -1,0 +1,50 @@
+---
+export const prerender = false
+
+import products from "../../data/product.json";
+import SvgAsset from "../../component/util/svgAsset.astro";
+import ListCardContainer from "../../component/util/listCardContainer.astro";
+import ListCard2 from "../../component/util/listCard2.astro";
+import TitleSection from "../../component/util/titleSection.astro";
+
+import type { GetStaticPaths, GetStaticPathsResult } from "astro";
+export const getStaticPaths = (() => {
+  const params: GetStaticPathsResult = [];
+  products.map((product) => {
+    params.push({ params: { productName: product.name } });
+  });
+  return params;
+}) satisfies GetStaticPaths;
+
+const { productName } = Astro.params;
+import MainFrame from "../../component/mainFrame.astro";
+const product = products.find((data) => data.name == productName);
+---
+
+<MainFrame endpoint={productName}>
+  <section id="home" class="flex pt-30 bg-bg justify-center pb-8" style="min-height: 61.2dvh;">
+    <div class="container">
+      <div class="flex flex-wrap px-12 justify-center">
+        <div class="w-full flex justify-center items-center gap-4 border-b pb-4 mb-12 lg:w-1/2">
+          <SvgAsset name={product?.name} />
+          <div style="font-display: swap;">
+            <h4 class="font-bold text-lg text-primary">Akun {product?.name.toUpperCase()}</h4>
+            <span class="font-normal text-sm text-balance">{product?.description}</span>
+          </div>
+        </div>
+        <div class="w-full">
+          {product?.subItem.map((item, i) => 
+          <h6 class="font-semibold text-lg text-secondary pb-2 lg:text-center mb-4 border-b border-gray-400">{item.name}</h6>
+            <div class="pb-12">
+                <ListCardContainer>
+                    {item.durations.map((durationItem, j)=>
+                        <ListCard2 title={durationItem.duration} category={`${i}${j+1}`} price={durationItem.price} product={product.name}/>
+                    )}
+                </ListCardContainer>
+            </div>
+        )}
+        </div>
+      </div>
+    </div>
+  </section>
+</MainFrame>

@@ -1,0 +1,20 @@
+{
+  "name": "warung_digital",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.4.2",
+    "@tailwindcss/vite": "^4.1.11",
+    "astro": "^5.12.9",
+    "dotenv": "^17.2.1",
+    "flowbite": "^3.1.2",
+    "midtrans-client": "^1.4.3",
+    "tailwindcss": "^4.1.11"
+  }
+}

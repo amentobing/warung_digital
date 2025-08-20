@@ -1,0 +1,90 @@
+---
+export const prerender = false;
+
+// Abaikan TypeScript yg merah
+import products from "../../../data/product.json";
+import SvgAsset from "../../../component/util/svgAsset.astro";
+
+import type { GetStaticPaths, GetStaticPathsResult } from "astro";
+export const getStaticPaths = (() => {
+  const params: GetStaticPathsResult = [];
+  products.map((product) => {
+    product.subItem.map((item, i) => {
+      item.durations.map((duration, j) => {
+        params.push({ params: { productName: product.name, idProduct: `${i}${j + 1}` } });
+      });
+    });
+  });
+  return params;
+}) satisfies GetStaticPaths;
+
+const { productName, idProduct } = Astro.params;
+import MainFrame from "../../../component/mainFrame.astro";
+const product = products.find((data) => data.name == productName);
+let duration: { duration: string; price: Number } | undefined; // Biar TypeScripnya tidak error makanya initialisasi type data didalamnya secara manual.
+let itemName;
+let id;
+products.map((products2) => {
+  id = String(idProduct).split("");
+  if (products2.name == productName) {
+    itemName = products2.subItem[Number(id[0])].name;
+    duration = products2.subItem[Number(id[0])].durations[Number(id[1]) - 1];
+  }
+});
+
+if (!duration) {
+  return Astro.redirect(`/product/${productName}`);
+}
+---
+
+<MainFrame endpoint={`${itemName} - ${productName}`}>
+  <section id="home" class="flex pt-30 bg-bg justify-center pb-8">
+    <div class="container">
+      <div class="flex flex-col px-12 justify-center items-center">
+        <div class="w-full flex justify-center items-center gap-4 lg:gap-0 pb-4 mb-4 lg:w-1/2">
+          <SvgAsset name={product?.name} />
+          <div style="font-display: swap;">
+            <h4 class="font-bold text-lg text-primary">Akun {product?.name.toUpperCase()}</h4>
+            <span class="font-normal text-sm text-balance">{product?.description}</span>
+          </div>
+        </div>
+        <div class="w-full md:w-2/3">
+          <form action="/purchase" method="post" class="flex flex-col justify-center items-center">
+            <input type="text" name="idProduct" id="idProduct" hidden value={idProduct} />
+            <input type="text" name="prompt" id="prompt" class="hidden" value="purchase" />
+            <div id="form" class="bg-bg-4 p-4 rounded-xl">
+              <table class="table-fixed border-none text-base font-medium text-secondary opacity-80 leading-relaxed min-w-96">
+                <tbody>
+                  <tr>
+                    <td class="w-[22%]">Nama</td>
+                    <td class="w-[4%]">:</td>
+                    <td class="font-bold opacity-100 text-wrap">{itemName}<input type="text" name="productName" id="productName" readonly value={itemName} class="hidden" /></td>
+                  </tr>
+                  <tr>
+                    <td>Kategori</td>
+                    <td>:</td>
+                    <td class="font-bold opacity-100">{String(productName).toUpperCase()}<input type="text" id="category" name="category" readonly value={String(productName).toUpperCase()} class="hidden" /></td>
+                  </tr>
+                  <tr>
+                    <td>Durasi</td>
+                    <td>:</td>
+                    <td class="font-bold opacity-100">{duration.duration}<input type="text" name="duration" id="duration" readonly value={duration.duration} class="hidden" /></td>
+                  </tr>
+                  <tr>
+                    <td>Harga</td>
+                    <td>:</td>
+                    <td class="font-bold opacity-100">{`Rp. ${duration.price.toLocaleString("id-ID")},-`}<input type="text" name="price" id="price" readonly value={duration.price.toString()} class="hidden" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <span class="mt-4 text-sm italic opacity-80">Note: Perhatikan Kembali Produk yang anda beli! </span>
+            <div class="w-full flex justify-end pt-12">
+              <button class="bg-primary font-bold text-lg py-2 px-4 rounded-full text-bg hover:opacity-80">Beli Sekarang</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainFrame>

@@ -1,0 +1,86 @@
+---
+const { endpoint = "" } = Astro.props;
+---
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{(endpoint == "" ? "" : `${endpoint.toUpperCase()} | `) + "Warung Digital"}</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/src/style/global.css" />
+  </head>
+  <body class="scroll-smooth">
+    <!-- Header Section Start -->
+    <header class="absolute top-0 left-0 z-10 flex w-full items-center bg-bg-2 navbar-fixed">
+      <div class="container px-6">
+        <div class="relative flex items-center justify-between">
+          <div class="px-4">
+            <a href="/" class="block py-6 text-lg font-bold text-primary leading-relaxed" id="icon">Warung Digital</a>
+          </div>
+          <div class="flex items-center px-4">
+            <button id="menus" name="menus" type="button" class="absolute right-4 block lg:hidden" aria-label="Menu Navigasi">
+              <span class="lines origin-top-left transition duration-300 ease-in-out"></span>
+              <span class="lines transition duration-300 ease-in-out"></span>
+              <span class="lines origin-bottom-left transition duration-300 ease-in-out"></span>
+            </button>
+            <nav
+              id="nav-menu"
+              class="absolute right-4 top-full opacity-0 hidden w-full max-w-[250px] rounded-lg bg-bg py-5 shadow-lg transition ease-in-out duration-200 lg:static lg:block lg:max-w-full lg:rounded-none lg:shadow-none lg:opacity-100 lg:bg-transparent lg:text-secondary"
+            >
+              <ul class="block lg:flex">
+                <li class="group"><a href="/" class="mx-8 flex py-2 text-base text-dark group-hover:text-primary">Home</a></li>
+                <li class="group"><a href="/#product" class="mx-8 flex py-2 text-base text-dark group-hover:text-primary">Product</a></li>
+                <li class="group"><a href="/" class="mx-8 flex py-2 text-base text-dark group-hover:text-primary">Help</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Header Section End -->
+    <slot />
+    <!-- Footer Start -->
+    <footer class="pt-12 bg-bg-4">
+      <div class="container">
+        <div class="flex flex-wrap px-12">
+          <div class="w-full mb-12 md:w-1/3">
+            <h4 class="font-bold text-3xl text-primary mb-2">Warung Digital</h4>
+            <p class="font-base text-sm text-secondary opacity-80 text-balance max-w-80">
+              Tempat tercepat dan termudah untuk mendapatkan akun digital favoritmu. Kami menyediakan berbagai macam akun premium, mulai dari platform streaming seperti YouTube Premium, Disney+ Hotstar, dan Netflix, hingga layanan musik dan aplikasi
+              lainnya.
+            </p>
+          </div>
+          <div class="w-full mb-12 md:w-1/3">
+            <h3 class="text-xl mb-2 font-semibold text-primary">Direct Site</h3>
+            <ul class="text-secondary">
+              <li class="mb-2"><a href="" class="hover:text-primary text-base">Home</a></li>
+              <li class="mb-2"><a href="" class="hover:text-primary text-base">Product</a></li>
+              <li class="mb-2"><a href="" class="hover:text-primary text-base">Help</a></li>
+            </ul>
+          </div>
+          <div class="w-full mb-12 md:w-1/3">
+            <h3 class="text-xl mb-2 font-semibold text-primary">Owner Link</h3>
+            <ul class="text-secondary">
+              <li class="mb-2"><a href="" class="hover:text-primary text-base">Github</a></li>
+              <li class="mb-2"><a href="" class="hover:text-primary text-base">Instagram</a></li>
+              <li class="mb-2"><a href="" class="hover:text-primary text-base">Youtube</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="w-full bg-secondary flex flex-wrap py-3 justify-center">
+        <p class="text-bg-2 text-xs">@2025 Dibuat dengan ❤️ oleh Amen Tobing</p>
+      </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Back to Top Start -->
+    <a href="#home" id="toTop" class="group hidden fixed bottom-4 right-4 z-50 h-14 w-14 items-center justify-center rounded-full bg-primary hover:bg-bg-2 hover:shadow-lg p-4 transition ease-in-out duration-300">
+      <span class="mt-2 block h-5 w-5 rotate-45 border-t-2 border-l-2 border-bg group-hover:border-primary"></span>
+    </a>
+    <!-- Back to Top End -->
+    <script src="/src/js/script.js" is:inline></script>
+  </body>
+</html>
