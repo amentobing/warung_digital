@@ -1,5 +1,6 @@
 ---
 const { endpoint = "" } = Astro.props;
+import "../styles/global.css";
 ---
 
 <html lang="id">
@@ -9,7 +10,6 @@ const { endpoint = "" } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <title>{(endpoint == "" ? "" : `${endpoint.toUpperCase()} | `) + "Warung Digital"}</title>
     <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/src/style/global.css" />
   </head>
   <body class="scroll-smooth">
     <!-- Header Section Start -->
@@ -81,6 +81,6 @@ const { endpoint = "" } = Astro.props;
       <span class="mt-2 block h-5 w-5 rotate-45 border-t-2 border-l-2 border-bg group-hover:border-primary"></span>
     </a>
     <!-- Back to Top End -->
-    <script src="/src/js/script.js" is:inline></script>
+    <script src="js/script.js" is:inline></script>
   </body>
 </html>
